@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <title>Diagramas a partir de texto</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link type=‘text/css’ rel=‘stylesheet’ href=‘https://www.uco.es/~in1rosaj/tools/jsUML2/ejemplos/css/UDStyle.css’ media=‘screen’ />
+  
+  <script type="text/javascript" src="https://www.uco.es/~in1rosaj/tools/jsUML2/ejemplos/UDCore.js"></script>
+  <script type="text/javascript" src="https://www.uco.es/~in1rosaj/tools/jsUML2/ejemplos/UDModules.js"></script>
+
+  <script type="text/javascript">
+    window.onload = function () {
+        // Crear el diagrama
+        var classDiagram = new UMLClassDiagram(
+            { id: 'classDiagram', width: 1000, height: 800 }
+        );
+        classDiagram.setName('Modelo PIM - Gestión de hotel');
+
+        // CLASES
+        var imagen = new UMLClass({ x: 50, y: 50 });
+        var hotel = new UMLClass({ x: 300, y: 50 });
+        var habitacion = new UMLClass({ x: 550, y: 50 });
+        var tipo_habitacion = new UMLClass({ x: 800, y: 50 });
+        var reservacion = new UMLClass({ x: 300, y: 300 });
+        var cliente = new UMLClass({ x: 550, y: 300 });
+
+        // clases y atributos
+        imagen.setName("Imagen");
+        imagen.addAttribute('+nombre: Texto');
+        imagen.addAttribute('+descripcion: Texto');
+        imagen.addAttribute('+url: Texto');
+
+        hotel.setName("Hotel");
+        hotel.addAttribute('+nombre: Texto');
+        hotel.addAttribute('+direccion: Texto');
+        hotel.addAttribute('+telefono: Texto');
+        hotel.addAttribute('+email: Texto');
+
+        habitacion.setName("Habitacion");
+        habitacion.addAttribute('+numero: Texto');
+        habitacion.addAttribute('+precio: Numerico');
+
+        tipo_habitacion.setName("TipoHabitacion");
+        tipo_habitacion.addAttribute('+nombre: Texto');
+        tipo_habitacion.addAttribute('+descripcion: Texto');
+
+        reservacion.setName("Reservacion");
+        reservacion.addAttribute('+fecha_entrada: Fecha');
+        reservacion.addAttribute('+fecha_salida: Fecha');
+        reservacion.addAttribute('+numero_personas: Numerico');
+
+        cliente.setName("Cliente");
+        cliente.addAttribute('+nombres: Texto');
+        cliente.addAttribute('+apellidos: Texto');
+        cliente.addAttribute('+numero_identificacion: Texto');
+        cliente.addAttribute('+tipo_identificacion: TipoIdentificacion');
+
+        // clases
+        classDiagram.addElement(imagen);
+        classDiagram.addElement(hotel);
+        classDiagram.addElement(habitacion);
+        classDiagram.addElement(tipo_habitacion);
+        classDiagram.addElement(reservacion);
+        classDiagram.addElement(cliente);
+
+        // relaciones
+        var rel_tipo_habitacion = new UMLComposition({ a: tipo_habitacion, b: habitacion });
+        rel_tipo_habitacion.setMultiplicityA('1');
+        rel_tipo_habitacion.setMultiplicityB('*');
+        classDiagram.addElement(rel_tipo_habitacion);
+
+        var rel_habitacion_imagen = new UMLComposition({ a: habitacion, b: imagen });
+        rel_habitacion_imagen.setMultiplicityA('1');
+        rel_habitacion_imagen.setMultiplicityB('*');
+        classDiagram.addElement(rel_habitacion_imagen);
+
+        var rel_habitacion_hotel = new UMLAssociation({ a: habitacion, b: hotel });
+        rel_habitacion_hotel.setMultiplicityA('1..*');
+        classDiagram.addElement(rel_habitacion_hotel);
+
+        var rel_habitacion_reservacion = new UMLAssociation({ a: habitacion, b: reservacion });
+        rel_habitacion_reservacion.setMultiplicityA('1..*');
+        classDiagram.addElement(rel_habitacion_reservacion);
+
+        var rel_reservacion_cliente = new UMLAssociation({ a: reservacion, b: cliente });
+        rel_reservacion_cliente.setValue('name', 'realiza');
+        classDiagram.addElement(rel_reservacion_cliente);
+
+        // dibujar diagrama
+        classDiagram.draw();
+        classDiagram.interaction(true);
+    }
+</script>
+
+</head>
+
+<body>
+
+  <div class="row">
+    <div class="col-md-10 m-auto my-5">
+      <div class="card">
+        <div class="card-header">
+          <strong>Diagrama de clases con jsUML2 (PIM)</strong>
+        </div>
+        <div class="card-body">
+          <p>
+            Ejemplo librería <a target="_blank"
+              href="https://www.uco.es/users/in1rosaj//tools/jsUML2/doc/TheProgrammersGuide_003.htm">jsUML2</a>
+            para crear diagramas a partir de texto y su
+            <a target="_blank" href="https://www.uco.es/~in1rosaj/tools/jsUML2/editor/index.html">Live editor</a>
+          </p>
+          <div id="classDiagram"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

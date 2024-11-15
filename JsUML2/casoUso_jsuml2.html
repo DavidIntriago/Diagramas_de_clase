@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <title>Diagramas a partir de texto</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://www.uco.es/~in1rosaj/tools/jsUML2/ejemplos/css/UDStyle.css" media="screen" />
+  
+  <script type="text/javascript" src="https://www.uco.es/~in1rosaj/tools/jsUML2/ejemplos/UDCore.js"></script>
+  <script type="text/javascript" src="https://www.uco.es/~in1rosaj/tools/jsUML2/ejemplos/UDModules.js"></script>
+
+  <script type="text/javascript">
+    window.onload = function () {
+        // Crear el diagrama
+        var useCaseDiagram = new UMLUseCaseDiagram(
+            { id: 'useCaseDiagram', width: 800, height: 600 }
+        );
+        useCaseDiagram.setName('Diagrama de Casos de Uso - Reservaciones de Hotel');
+
+        // Actores
+        var cliente = new UMLActor({ x: 50, y: 250 });
+        var recepcionista = new UMLActor({ x: 700, y: 100 });
+
+        cliente.setName("Cliente");
+        recepcionista.setName("Recepcionista");
+
+        // Casos de uso
+        var buscar_habitacion = new UMLUseCase({ x: 300, y: 100 });
+        var hacer_reservacion = new UMLUseCase({ x: 300, y: 300 });
+        var cancelar_reservacion = new UMLUseCase({ x: 500, y: 300 });
+
+        buscar_habitacion.setName("Buscar habitación");
+        hacer_reservacion.setName("Hacer reservación");
+        cancelar_reservacion.setName("Cancelar reservación");
+
+        // Añadir elementos al diagrama
+        useCaseDiagram.addElement(cliente);
+        useCaseDiagram.addElement(recepcionista);
+        useCaseDiagram.addElement(buscar_habitacion);
+        useCaseDiagram.addElement(hacer_reservacion);
+        useCaseDiagram.addElement(cancelar_reservacion);
+
+        // Relaciones
+        var rel_cliente_buscar = new UMLAssociation({ a: cliente, b: buscar_habitacion });
+        var rel_cliente_reservar = new UMLAssociation({ a: cliente, b: hacer_reservacion });
+        var rel_cliente_cancelar = new UMLAssociation({ a: cliente, b: cancelar_reservacion });
+
+        var rel_recepcionista_reservar = new UMLAssociation({ a: recepcionista, b: hacer_reservacion });
+        var rel_recepcionista_cancelar = new UMLAssociation({ a: recepcionista, b: cancelar_reservacion });
+
+        useCaseDiagram.addElement(rel_cliente_buscar);
+        useCaseDiagram.addElement(rel_cliente_reservar);
+        useCaseDiagram.addElement(rel_cliente_cancelar);
+        useCaseDiagram.addElement(rel_recepcionista_reservar);
+        useCaseDiagram.addElement(rel_recepcionista_cancelar);
+
+        // Dibujar el diagrama
+        useCaseDiagram.draw();
+        useCaseDiagram.interaction(true);
+    };
+  </script>
+
+</head>
+
+<body>
+
+  <div class="row">
+    <div class="col-md-10 m-auto my-5">
+      <div class="card">
+        <div class="card-header">
+          <strong>Diagrama de casos de uso con jsUML2</strong>
+        </div>
+        <div class="card-body">
+          <p>
+            Ejemplo librería <a target="_blank"
+              href="https://www.uco.es/users/in1rosaj//tools/jsUML2/doc/TheProgrammersGuide_003.htm">jsUML2</a>
+            para crear diagramas de casos de uso.
+          </p>
+          <div id="useCaseDiagram"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

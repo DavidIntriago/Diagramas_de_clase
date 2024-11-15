@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Diagrama de Casos de Uso - Mermaid</title>
+
+    <!-- Cargar Mermaid desde CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+
+<body>
+    <h2>Diagrama de Casos de Uso - Reservaciones de Hotel</h2>
+
+    <!-- Contenedor del diagrama -->
+    <div class="mermaid">
+        %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1f77b4', 'actorBkg': '#f5f5f5', 'actorBorder': '#555'}}}%%
+        usecaseDiagram
+            title Diagrama de Casos de Uso - Reservaciones de Hotel
+
+            actor Cliente as "Cliente"
+            actor Recepcionista as "Recepcionista"
+
+            Cliente --> (Buscar habitación)
+            Cliente --> (Hacer reservación)
+            Cliente --> (Cancelar reservación)
+
+            Recepcionista --> (Hacer reservación)
+            Recepcionista --> (Cancelar reservación)
+    </div>
+</body>
+
+</html>
